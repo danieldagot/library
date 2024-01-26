@@ -10,22 +10,22 @@ router = APIRouter()
 
 
 
-@router.post("/authors/", response_model=schemas.Author)
+@router.post("", response_model=schemas.Author)
 def create_author(author: schemas.AuthorCreate, db: Session = Depends(get_db)):
     return crud.create_author(db=db, author=author)
 
-@router.get("/authors/{author_id}", response_model=schemas.Author)
+@router.get("/{author_id}", response_model=schemas.Author)
 def read_author(author_id: int, db: Session = Depends(get_db)):
     db_author = crud.get_author(db, author_id=author_id)
     if db_author is None:
         raise HTTPException(status_code=404, detail="Author not found")
     return db_author
-@router.get("/authors", response_model=List[schemas.Author])
+@router.get("", response_model=List[schemas.Author])
 def read_authors(db: Session = Depends(get_db)):
     db_authors = crud.get_authors(db)
     return db_authors
 
-@router.post("/authors/{author_id}/book", response_model=schemas.Book)
+@router.post("/{author_id}/book", response_model=schemas.Book)
 def create_book_for_author(
     author_id: int, book: schemas.BookCreate, db: Session = Depends(get_db)
 ):

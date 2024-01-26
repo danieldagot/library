@@ -8,7 +8,11 @@ def validate_disallowed_chars(value: str) -> str:
 class AuthorBase(BaseModel):
     name: str
     _validate_chars = validator('name', allow_reuse=True)(validate_disallowed_chars)
-
+    @validator('name')
+    def validate_name_length(cls, value):
+        if len(value) < 3:
+            raise ValueError("Name must be at least 3 characters long")
+        return value
 
 class AuthorCreate(AuthorBase):
     pass
@@ -26,6 +30,7 @@ class BookBase(BaseModel):
     @validator('title', 'summary', each_item=True)
     def validate_chars(cls, value):
         return validate_disallowed_chars(value)
+    
 class BookCreate(BookBase):
     pass
 

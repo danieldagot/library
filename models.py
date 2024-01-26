@@ -15,4 +15,3 @@ class Book(Base):
     summary = Column(String, index=True)
     author_id = Column(Integer, ForeignKey('authors.id'))
     author = relationship("Author", back_populates="books")
-

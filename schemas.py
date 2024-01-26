@@ -30,6 +30,10 @@ class BookBase(BaseModel):
     @validator('title', 'summary', each_item=True)
     def validate_chars(cls, value):
         return validate_disallowed_chars(value)
+    @validator('title')
+    def validate_name_length(cls, value):
+        if len(value) < 3:
+            raise ValueError("title must be at least 3 characters long")
     
 class BookCreate(BookBase):
     pass

@@ -1,6 +1,10 @@
-runserver:
+run:
 	uvicorn main:app --reload
 start:
 	poetry shell 
-startDb:
-	docker-compose up -d 
+	uvicorn main:app --reload
+init: 
+	poetry install --no-root
+	poetry shell 
+	uvicorn main:app --reload
+
